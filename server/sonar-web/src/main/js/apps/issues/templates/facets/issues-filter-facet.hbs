@@ -1,0 +1,19 @@
+<div class="search-navigator-facet-header">
+  <i style="position: relative; top: 2px;" class="icon-favorite"></i>&nbsp;Saved Searches
+  <button style="visibility: hidden">1</button>
+  <button class="pull-right">Save Search</button>
+</div>
+
+
+<ul class="search-navigator-facet-list">
+  {{#each filters}}
+    <li>
+      <a class="facet search-navigator-facet js-facet" data-value="{{id}}" title="{{name}}">
+        <span class="facet-name">{{name}}</span>
+        <span class="facet-stat">
+          <span style="padding-top: 2px;" class="facet-toggle"><button class="button-link">Copy</button></span>
+        </span>
+      </a>
+    </li>
+  {{/each}}
+</ul>

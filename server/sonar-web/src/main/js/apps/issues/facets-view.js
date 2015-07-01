@@ -17,10 +17,11 @@ define([
   './facets/author-facet',
   './facets/issue-key-facet',
   './facets/context-facet',
-  './facets/mode-facet'
+  './facets/mode-facet',
+  './facets/filter-facet'
 ], function (FacetsView, BaseFacet, SeverityFacet, StatusFacet, ProjectFacet, ModuleFacet, AssigneeFacet, RuleFacet,
              TagFacet, ResolutionFacet, CreationDateFacet, ActionPlanFacet, FileFacet, ReporterFacet, LanguageFacet,
-             AuthorFacet, IssueKeyFacet, ContextFacet, ModeFacet) {
+             AuthorFacet, IssueKeyFacet, ContextFacet, ModeFacet, FilterFacet) {
 
   var viewsMapping = {
     severities: SeverityFacet,
@@ -39,7 +40,8 @@ define([
     authors: AuthorFacet,
     issues: IssueKeyFacet,
     context: ContextFacet,
-    facetMode: ModeFacet
+    facetMode: ModeFacet,
+    id: FilterFacet
   };
 
   return FacetsView.extend({

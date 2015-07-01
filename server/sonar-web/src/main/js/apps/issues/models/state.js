@@ -7,9 +7,10 @@ define([
       page: 1,
       maxResultsReached: false,
       query: {},
-      facets: ['facetMode', 'severities', 'resolutions'],
+      facets: ['id', 'facetMode', 'severities', 'resolutions'],
       isContext: false,
       allFacets: [
+        'id',
         'facetMode',
         'issues',
         'severities',

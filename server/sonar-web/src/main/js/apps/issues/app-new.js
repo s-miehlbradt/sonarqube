@@ -47,12 +47,6 @@ define([
         });
         this.layout.facetsRegion.show(this.facetsView);
 
-        this.filtersView = new FiltersView({
-          app: this,
-          collection: this.filters
-        });
-        this.layout.filtersRegion.show(this.filtersView);
-
         this.controller.fetchFilters().done(function () {
           key.setScope('list');
           App.router = new Router({ app: App });
