@@ -1,6 +1,5 @@
 #!/bin/bash
-
-# Shortcut to stop server. It must be already built.
+# description: Stop SonarQube server
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   OS='macosx-universal-64'

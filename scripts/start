@@ -1,4 +1,6 @@
 #!/bin/bash
+# description: Start SonarQube server
+
 ###############################
 # usage: use -d option to enable remote debugging of the web server on port 5005
 ###############################
