@@ -1,0 +1,4 @@
+#!/bin/sh
+# description: Set correct copyright headers
+
+mvn license:format

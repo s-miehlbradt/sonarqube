@@ -1,4 +1,5 @@
 #!/bin/sh
+# description: Search for duplication of classes in classpath
 
 # Search for duplication of classes in classpath
 # This check can not be automated in build yet as current

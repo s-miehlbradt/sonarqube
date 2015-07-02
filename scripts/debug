@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# description: Start SonarQube server with debug agent
 
 cd sonar-application/target/
 if ! ls sonarqube-*/bin/sonar-application*.jar &> /dev/null; then

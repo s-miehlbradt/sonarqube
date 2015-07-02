@@ -1,4 +1,5 @@
 #!/bin/sh
+# description: Quick build SonarQube
 
 export MAVEN_OPTS='-Xmx256m'
 

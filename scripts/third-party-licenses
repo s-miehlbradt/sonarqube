@@ -1,2 +1,4 @@
 #!/bin/sh
+# description: Produce 3rd Party licenses
+
 mvn org.codehaus.mojo:license-maven-plugin:aggregate-add-third-party -pl sonar-application -am
