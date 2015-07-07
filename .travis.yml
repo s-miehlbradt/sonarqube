@@ -33,3 +33,6 @@ before_cache:
 
 notifications:
   email: false
+
+addons:
+  firefox: "39.0"
