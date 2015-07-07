@@ -25,28 +25,24 @@ define(function (require) {
       return this.remote
           .open()
           .mockFromFile('/api/rules/app', 'coding-rules-spec/app.json')
+          .mockFromFile('/api/rules/search',
+          'coding-rules-spec/search-profile-facet-qprofile-active.json',
+          { data: { activation: true } })
+          .mockFromFile('/api/rules/search',
+          'coding-rules-spec/search-profile-facet-qprofile-inactive.json',
+          { data: { activation: 'false' } })
           .mockFromFile('/api/rules/search', 'coding-rules-spec/search-profile-facet.json')
           .startApp('coding-rules')
           .checkElementExist('.coding-rule')
           .checkElementInclude('#coding-rules-total', '609')
           .clickElement('[data-property="qprofile"] .js-facet-toggle')
           .checkElementExist('.js-facet[data-value="java-default-with-mojo-conventions-49307"]')
-          .clearMocks()
-          .mockFromFile('/api/rules/search',
-          'coding-rules-spec/search-profile-facet-qprofile-active.json',
-          { data: { activation: true } })
           .clickElement('.js-facet[data-value="java-default-with-mojo-conventions-49307"]')
           .checkElementInclude('#coding-rules-total', '407')
           .checkElementExist('.js-facet[data-value="java-default-with-mojo-conventions-49307"] .js-active.facet-toggle-active')
-          .clearMocks()
-          .mockFromFile('/api/rules/search',
-          'coding-rules-spec/search-profile-facet-qprofile-inactive.json',
-          { data: { activation: 'false' } })
           .clickElement('.js-facet[data-value="java-default-with-mojo-conventions-49307"] .js-inactive')
           .checkElementInclude('#coding-rules-total', '408')
           .checkElementExist('.js-facet[data-value="java-default-with-mojo-conventions-49307"] .js-inactive.facet-toggle-active')
-          .clearMocks()
-          .mockFromFile('/api/rules/search', 'coding-rules-spec/search-profile-facet.json')
           .clickElement('[data-property="qprofile"] .js-facet-toggle')
           .checkElementInclude('#coding-rules-total', '609');
     });
