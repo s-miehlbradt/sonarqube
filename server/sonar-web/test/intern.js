@@ -27,6 +27,8 @@ define(['intern'], function (intern) {
       'test/medium/coding-rules.spec'
     ],
 
+    grep: /should show profile facet/,
+
     tunnel: tunnel,
     environments: [
       { browserName: 'firefox' }
