@@ -682,20 +682,28 @@ define(function (require) {
           .open()
           .mockFromString('/api/l10n/index', '{}')
           .mockFromFile('/api/rules/app', 'coding-rules-spec/app.json')
-          .mockFromFile('/api/rules/search', 'coding-rules-spec/search-only-templates.json',
-          { data: { 'is_template': 'true' } })
-          .mockFromFile('/api/rules/search', 'coding-rules-spec/search-hide-templates.json',
-          { data: { 'is_template': 'false' } })
           .mockFromFile('/api/rules/search', 'coding-rules-spec/search.json')
           .startApp('coding-rules')
           .checkElementExist('.coding-rule')
           .checkElementExist('.search-navigator-facet-box-collapsed[data-property="is_template"]')
+
           .clickElement('[data-property="is_template"] .js-facet-toggle')
           .checkElementExist('[data-property="is_template"] .js-facet[data-value="true"]')
+
+          .clearMocks()
+          .mockFromFile('/api/rules/search', 'coding-rules-spec/search-only-templates.json',
+          { data: { 'is_template': 'true' } })
           .clickElement('[data-property="is_template"] .js-facet[data-value="true"]')
           .checkElementInclude('#coding-rules-total', 8)
+
+          .clearMocks()
+          .mockFromFile('/api/rules/search', 'coding-rules-spec/search-hide-templates.json',
+          { data: { 'is_template': 'false' } })
           .clickElement('[data-property="is_template"] .js-facet[data-value="false"]')
           .checkElementInclude('#coding-rules-total', 7)
+
+          .clearMocks()
+          .mockFromFile('/api/rules/search', 'coding-rules-spec/search.json')
           .clickElement('[data-property="is_template"] .js-facet-toggle')
           .checkElementInclude('#coding-rules-total', 609);
     });
