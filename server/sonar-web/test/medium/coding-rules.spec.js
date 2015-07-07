@@ -116,14 +116,15 @@ define(function (require) {
       return this.remote
           .open()
           .mockFromFile('/api/rules/app', 'coding-rules-spec/app.json')
-          .mockFromFile('/api/rules/search', 'coding-rules-spec/search-custom-rules.json',
-          { data: { template_key: 'squid:ArchitecturalConstraint' } })
           .mockFromFile('/api/rules/search', 'coding-rules-spec/search-create-custom-rules.json')
-          .mockFromFile('/api/rules/show', 'coding-rules-spec/show-create-custom-rules.json')
-          .mockFromString('/api/rules/create', '{}')
-          .mockFromString('/api/issues/search', '{}')
           .startApp('coding-rules')
           .checkElementExist('.coding-rule.selected')
+          .clearMocks()
+          .mockFromFile('/api/rules/show', 'coding-rules-spec/show-create-custom-rules.json')
+          .mockFromFile('/api/rules/search', 'coding-rules-spec/search-custom-rules.json',
+          { data: { template_key: 'squid:ArchitecturalConstraint' } })
+          .mockFromString('/api/rules/create', '{}')
+          .mockFromString('/api/issues/search', '{}')
           .clickElement('.coding-rule.selected .js-rule')
           .checkElementExist('#coding-rules-detail-custom-rules .coding-rules-detail-list-name')
           .clearMocks()
@@ -142,15 +143,16 @@ define(function (require) {
       return this.remote
           .open()
           .mockFromFile('/api/rules/app', 'coding-rules-spec/app.json')
-          .mockFromFile('/api/rules/search', 'coding-rules-spec/search-custom-rules.json',
-          { data: { template_key: 'squid:ArchitecturalConstraint' } })
           .mockFromFile('/api/rules/search', 'coding-rules-spec/search-create-custom-rules.json')
-          .mockFromFile('/api/rules/show', 'coding-rules-spec/show-create-custom-rules.json')
-          .mockFromFile('/api/rules/create', 'coding-rules-spec/create-create-custom-rules.json', { status: 409 })
-          .mockFromString('/api/issues/search', '{}')
           .startApp('coding-rules')
           .forceJSON()
           .checkElementExist('.coding-rule.selected')
+          .clearMocks()
+          .mockFromFile('/api/rules/show', 'coding-rules-spec/show-create-custom-rules.json')
+          .mockFromFile('/api/rules/search', 'coding-rules-spec/search-custom-rules.json',
+          { data: { template_key: 'squid:ArchitecturalConstraint' } })
+          .mockFromFile('/api/rules/create', 'coding-rules-spec/create-create-custom-rules.json', { status: 409 })
+          .mockFromString('/api/issues/search', '{}')
           .clickElement('.coding-rule.selected .js-rule')
           .checkElementExist('.js-create-custom-rule')
           .clickElement('.js-create-custom-rule')
