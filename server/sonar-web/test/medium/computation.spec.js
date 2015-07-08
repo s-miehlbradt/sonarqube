@@ -6,8 +6,8 @@ define(function (require) {
     bdd.it('should show list', function () {
       return this.remote
           .open()
-          .mockFromFile('/api/computation/queue', 'computation-spec/queue.json')
-          .mockFromFile('/api/computation/history', 'computation-spec/history.json')
+          .mock({ url: '/api/computation/queue', file: 'computation-spec/queue.json' })
+          .mock({ url: '/api/computation/history', file: 'computation-spec/history.json' })
           .startApp('computation', { urlRoot: '/test/medium/base.html' })
           .checkElementCount('#computation-list li[data-id]', 1)
           .checkElementInclude('#computation-list', 'SonarQube')
@@ -25,12 +25,16 @@ define(function (require) {
     bdd.it('should show more', function () {
       return this.remote
           .open('#past')
-          .mockFromFile('/api/computation/queue', 'computation-spec/queue.json')
-          .mockFromFile('/api/computation/history', 'computation-spec/history-big-1.json')
+          .mock({ url: '/api/computation/queue', file: 'computation-spec/queue.json' })
+          .mock({ url: '/api/computation/history', file: 'computation-spec/history-big-1.json' })
           .startApp('computation', { urlRoot: '/test/medium/base.html' })
           .checkElementCount('#computation-list li[data-id]', 2)
           .clearMocks()
-          .mockFromFile('/api/computation/history', 'computation-spec/history-big-2.json', { data: { p: 2 } })
+          .mock({
+            url: '/api/computation/history',
+            data: { p: 2 },
+            file: 'computation-spec/history-big-2.json'
+          })
           .clickElement('#computation-fetch-more')
           .checkElementCount('#computation-list li[data-id]', 3);
     });

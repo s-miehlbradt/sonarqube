@@ -6,8 +6,7 @@ define(function (require) {
     bdd.it('should show list of users', function () {
       return this.remote
           .open()
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/users/search', 'users-spec/search.json')
+          .mock({ url: '/api/users/search', file: 'users-spec/search.json' })
           .startApp('users')
           .checkElementCount('#users-list li[data-login]', 3)
           .checkElementInclude('#users-list .js-user-login', 'smith')
@@ -28,18 +27,17 @@ define(function (require) {
     bdd.it('should search users', function () {
       return this.remote
           .open()
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/users/search', 'users-spec/search.json')
+          .mock({ url: '/api/users/search', file: 'users-spec/search.json' })
           .startApp('users')
           .checkElementCount('#users-list li[data-login]', 3)
           .clearMocks()
-          .mockFromFile('/api/users/search', 'users-spec/search-filtered.json')
+          .mock({ url: '/api/users/search', file: 'users-spec/search-filtered.json' })
           .fillElement('#users-search-query', 'ryan')
           .clickElement('#users-search-submit')
           .checkElementNotExist('[data-login="admin"]')
           .checkElementCount('#users-list li[data-login]', 1)
           .clearMocks()
-          .mockFromFile('/api/users/search', 'users-spec/search.json')
+          .mock({ url: '/api/users/search', file: 'users-spec/search.json' })
           .fillElement('#users-search-query', '')
           .clickElement('#users-search-submit')
           .checkElementCount('[data-login="admin"]', 1)
@@ -49,12 +47,11 @@ define(function (require) {
     bdd.it('should show more', function () {
       return this.remote
           .open()
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/users/search', 'users-spec/search-big-1.json')
+          .mock({ url: '/api/users/search', file: 'users-spec/search-big-1.json' })
           .startApp('users')
           .checkElementCount('#users-list li[data-login]', 2)
           .clearMocks()
-          .mockFromFile('/api/users/search', 'users-spec/search-big-2.json')
+          .mock({ url: '/api/users/search', file: 'users-spec/search-big-2.json' })
           .clickElement('#users-fetch-more')
           .checkElementCount('[data-login="ryan"]', 1)
           .checkElementCount('#users-list li[data-login]', 3);
@@ -63,15 +60,14 @@ define(function (require) {
     bdd.it('should create a new user', function () {
       return this.remote
           .open()
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/users/search', 'users-spec/search.json')
+          .mock({ url: '/api/users/search', file: 'users-spec/search.json' })
           .startApp('users')
           .checkElementCount('#users-list li[data-login]', 3)
           .clickElement('#users-create')
           .checkElementCount('#create-user-form', 1)
           .clearMocks()
-          .mockFromFile('/api/users/search', 'users-spec/search-created.json')
-          .mockFromString('/api/users/create', '{}')
+          .mock({ url: '/api/users/search', file: 'users-spec/search-created.json' })
+          .mock({ url: '/api/users/create' })
           .clickElement('#create-user-add-scm-account')
           .clickElement('#create-user-add-scm-account')
           .fillElement('#create-user-login', 'login')
@@ -91,14 +87,13 @@ define(function (require) {
     bdd.it('should update a user', function () {
       return this.remote
           .open()
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/users/search', 'users-spec/search.json')
+          .mock({ url: '/api/users/search', file: 'users-spec/search.json' })
           .startApp('users')
           .clickElement('[data-login="smith"] .js-user-update')
           .checkElementCount('#create-user-form', 1)
           .clearMocks()
-          .mockFromFile('/api/users/search', 'users-spec/search-updated.json')
-          .mockFromString('/api/users/update', '{}')
+          .mock({ url: '/api/users/search', file: 'users-spec/search-updated.json' })
+          .mock({ url: '/api/users/update' })
           .clickElement('#create-user-add-scm-account')
           .fillElement('#create-user-name', 'Mike')
           .fillElement('#create-user-email', 'mike@example.com')
@@ -114,13 +109,12 @@ define(function (require) {
     bdd.it('should change user\'s password', function () {
       return this.remote
           .open()
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/users/search', 'users-spec/search.json')
+          .mock({ url: '/api/users/search', file: 'users-spec/search.json' })
           .startApp('users')
           .clickElement('[data-login="smith"] .js-user-change-password')
           .checkElementCount('#change-user-password-form', 1)
           .clearMocks()
-          .mockFromString('/api/users/change_password', '{}')
+          .mock({ url: '/api/users/change_password' })
           .fillElement('#change-user-password-password', 'secret')
           .fillElement('#change-user-password-password-confirmation', 'another')
           .clickElement('#change-user-password-submit')
@@ -134,13 +128,12 @@ define(function (require) {
     bdd.it('should deactivate a user', function () {
       return this.remote
           .open()
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/users/search', 'users-spec/search.json')
+          .mock({ url: '/api/users/search', file: 'users-spec/search.json' })
           .startApp('users')
           .clickElement('[data-login="smith"] .js-user-deactivate')
           .checkElementCount('#deactivate-user-form', 1)
           .clearMocks()
-          .mockFromString('/api/users/deactivate', '{}')
+          .mock({ url: '/api/users/deactivate' })
           .clickElement('#deactivate-user-submit')
           .waitForDeletedByCssSelector('[data-login="smith"]');
     });

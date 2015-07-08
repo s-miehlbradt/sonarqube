@@ -8,8 +8,11 @@ define(function (require) {
     bdd.it('should show list', function () {
       return this.remote
           .open()
-          .mockFromFile('/api/custom_measures/search', 'custom-measures-spec/search.json',
-          { data: { projectId: projectId } })
+          .mock({
+            url: '/api/custom_measures/search',
+            data: { projectId: projectId },
+            file: 'custom-measures-spec/search.json'
+          })
           .startApp('custom-measures', { projectId: projectId })
           .checkElementCount('#custom-measures-list li[data-id]', 4)
           .checkElementInclude('#custom-measures-list .js-custom-measure-value', '35')
@@ -27,14 +30,20 @@ define(function (require) {
     bdd.it('should show more', function () {
       return this.remote
           .open()
-          .mockFromFile('/api/custom_measures/search', 'custom-measures-spec/search-big-1.json',
-          { data: { projectId: projectId } })
+          .mock({
+            url: '/api/custom_measures/search',
+            data: { projectId: projectId },
+            file: 'custom-measures-spec/search-big-1.json'
+          })
           .startApp('custom-measures', { projectId: projectId })
           .checkElementCount('#custom-measures-list li[data-id]', 2)
           .checkElementNotExist('[data-id="3"]')
           .clearMocks()
-          .mockFromFile('/api/custom_measures/search', 'custom-measures-spec/search-big-2.json',
-          { data: { projectId: projectId, p: 2 } })
+          .mock({
+            url: '/api/custom_measures/search',
+            data: { projectId: projectId, p: 2 },
+            file: 'custom-measures-spec/search-big-2.json'
+          })
           .clickElement('#custom-measures-fetch-more')
           .checkElementExist('[data-id="3"]')
           .checkElementCount('#custom-measures-list li[data-id]', 4);
@@ -43,22 +52,36 @@ define(function (require) {
     bdd.it('should create a new custom measure', function () {
       return this.remote
           .open()
-          .mockFromFile('/api/custom_measures/search', 'custom-measures-spec/search.json',
-          { data: { projectId: projectId } })
-          .mockFromFile('/api/metrics/search', 'custom-measures-spec/metrics.json', { data: { isCustom: true } })
+          .mock({
+            url: '/api/custom_measures/search',
+            data: { projectId: projectId },
+            file: 'custom-measures-spec/search.json'
+          })
+          .mock({
+            url: '/api/metrics/search',
+            data: { isCustom: true },
+            file: 'custom-measures-spec/metrics.json'
+          })
           .startApp('custom-measures', { projectId: projectId })
           .checkElementCount('#custom-measures-list li[data-id]', 4)
           .clickElement('#custom-measures-create')
           .checkElementExist('#create-custom-measure-form')
           .clearMocks()
-          .mockFromFile('/api/custom_measures/search', 'custom-measures-spec/search-created.json',
-          { data: { projectId: projectId } })
-          .mockFromString('/api/custom_measures/create', '{}', { data: {
-            metricId: '156',
-            value: '17',
-            description: 'example',
-            projectId: projectId
-          } })
+          .mock({
+            url: '/api/custom_measures/search',
+            data: { projectId: projectId },
+            file: 'custom-measures-spec/search-created.json'
+          })
+          .mock({
+            url: '/api/custom_measures/create',
+            data: {
+              metricId: '156',
+              value: '17',
+              description: 'example',
+              projectId: projectId
+            },
+            responseText: '{}'
+          })
           .fillElement('#create-custom-measure-metric', '156')
           .fillElement('#create-custom-measure-value', '17')
           .fillElement('#create-custom-measure-description', 'example')
@@ -71,9 +94,16 @@ define(function (require) {
     bdd.it('should filter available metrics', function () {
       return this.remote
           .open()
-          .mockFromFile('/api/custom_measures/search', 'custom-measures-spec/search.json',
-          { data: { projectId: projectId } })
-          .mockFromFile('/api/metrics/search', 'custom-measures-spec/metrics.json', { data: { isCustom: true } })
+          .mock({
+            url: '/api/custom_measures/search',
+            data: { projectId: projectId },
+            file: 'custom-measures-spec/search.json'
+          })
+          .mock({
+            url: '/api/metrics/search',
+            data: { isCustom: true },
+            file: 'custom-measures-spec/metrics.json'
+          })
           .startApp('custom-measures', { projectId: projectId })
           .clickElement('#custom-measures-create')
           .checkElementExist('#create-custom-measure-form')
@@ -84,10 +114,16 @@ define(function (require) {
     bdd.it('should show warning when there are no available metrics', function () {
       return this.remote
           .open()
-          .mockFromFile('/api/custom_measures/search', 'custom-measures-spec/search.json',
-          { data: { projectId: projectId } })
-          .mockFromFile('/api/metrics/search', 'custom-measures-spec/metrics-limited.json',
-          { data: { isCustom: true } })
+          .mock({
+            url: '/api/custom_measures/search',
+            data: { projectId: projectId },
+            file: 'custom-measures-spec/search.json'
+          })
+          .mock({
+            url: '/api/metrics/search',
+            data: { isCustom: true },
+            file: 'custom-measures-spec/metrics-limited.json'
+          })
           .startApp('custom-measures', { projectId: projectId })
           .clickElement('#custom-measures-create')
           .checkElementExist('#create-custom-measure-form')
@@ -99,20 +135,34 @@ define(function (require) {
     bdd.it('should update a custom measure', function () {
       return this.remote
           .open()
-          .mockFromFile('/api/custom_measures/search', 'custom-measures-spec/search.json',
-          { data: { projectId: projectId } })
-          .mockFromFile('/api/metrics/search', 'custom-measures-spec/metrics.json', { data: { isCustom: true } })
+          .mock({
+            url: '/api/custom_measures/search',
+            data: { projectId: projectId },
+            file: 'custom-measures-spec/search.json'
+          })
+          .mock({
+            url: '/api/metrics/search',
+            data: { isCustom: true },
+            file: 'custom-measures-spec/metrics.json'
+          })
           .startApp('custom-measures', { projectId: projectId })
           .clickElement('[data-id="5"] .js-custom-measure-update')
           .checkElementExist('#create-custom-measure-form')
           .clearMocks()
-          .mockFromFile('/api/custom_measures/search', 'custom-measures-spec/search-updated.json',
-          { data: { projectId: projectId } })
-          .mockFromString('/api/custom_measures/update', '{}', { data: {
-            id: '5',
-            value: '2',
-            description: 'new!'
-          } })
+          .mock({
+            url: '/api/custom_measures/search',
+            data: { projectId: projectId },
+            file: 'custom-measures-spec/search-updated.json'
+          })
+          .mock({
+            url: '/api/custom_measures/update',
+            data: {
+              id: '5',
+              value: '2',
+              description: 'new!'
+            },
+            responseText: '{}'
+          })
           .fillElement('#create-custom-measure-value', '2')
           .fillElement('#create-custom-measure-description', 'new!')
           .clickElement('#create-custom-measure-submit')
@@ -124,15 +174,21 @@ define(function (require) {
     bdd.it('should delete a custom measure', function () {
       return this.remote
           .open()
-          .mockFromFile('/api/custom_measures/search', 'custom-measures-spec/search.json',
-          { data: { projectId: projectId } })
+          .mock({
+            url: '/api/custom_measures/search',
+            data: { projectId: projectId },
+            file: 'custom-measures-spec/search.json'
+          })
           .startApp('custom-measures', { projectId: projectId })
           .clickElement('[data-id="5"] .js-custom-measure-delete')
           .checkElementExist('#delete-custom-measure-form', 1)
           .clearMocks()
-          .mockFromFile('/api/custom_measures/search', 'custom-measures-spec/search-deleted.json',
-          { data: { projectId: projectId } })
-          .mockFromString('/api/custom_measures/delete', '{}', { data: { id: '5' } })
+          .mock({
+            url: '/api/custom_measures/search',
+            data: { projectId: projectId },
+            file: 'custom-measures-spec/search-deleted.json'
+          })
+          .mock({ url: '/api/custom_measures/delete', data: { id: '5' } })
           .clickElement('#delete-custom-measure-submit')
           .checkElementNotExist('[data-id="5"]');
     });

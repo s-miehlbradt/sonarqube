@@ -18,7 +18,8 @@
     "intern": "^3.0.0-rc.1",
     "jit-grunt": "0.9.1",
     "sinon": "^1.15.4",
-    "time-grunt": "1.2.1"
+    "time-grunt": "1.2.1",
+    "underscore": "^1.8.3"
   },
   "scripts": {
     "build-fast": "./node_modules/.bin/grunt build-fast",

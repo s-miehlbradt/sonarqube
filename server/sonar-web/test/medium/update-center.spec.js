@@ -6,10 +6,9 @@ define(function (require) {
     bdd.it('should show plugin card', function () {
       return this.remote
           .open()
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/installed', 'update-center-spec/installed.json')
-          .mockFromFile('/api/plugins/updates', 'update-center-spec/updates.json')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
+          .mock({ url: '/api/plugins/installed', file: 'update-center-spec/installed.json' })
+          .mock({ url: '/api/plugins/updates', file: 'update-center-spec/updates.json' })
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementExist('.js-plugin-name')
           .checkElementCount('li[data-id]', 5)
@@ -33,9 +32,8 @@ define(function (require) {
     bdd.it('should show system upgrade', function () {
       return this.remote
           .open('#system')
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
-          .mockFromFile('/api/system/upgrades', 'update-center-spec/system-updates.json')
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
+          .mock({ url: '/api/system/upgrades', file: 'update-center-spec/system-updates.json' })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementExist('.js-plugin-name')
           .checkElementCount('li[data-system]', 1)
@@ -51,10 +49,9 @@ define(function (require) {
     bdd.it('should show installed', function () {
       return this.remote
           .open('#installed')
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/installed', 'update-center-spec/installed.json')
-          .mockFromFile('/api/plugins/updates', 'update-center-spec/updates.json')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
+          .mock({ url: '/api/plugins/installed', file: 'update-center-spec/installed.json' })
+          .mock({ url: '/api/plugins/updates', file: 'update-center-spec/updates.json' })
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementExist('.js-plugin-name')
           .checkElementCount('li[data-id]', 5)
@@ -65,10 +62,9 @@ define(function (require) {
     bdd.it('should show updates', function () {
       return this.remote
           .open('#updates')
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/installed', 'update-center-spec/installed.json')
-          .mockFromFile('/api/plugins/updates', 'update-center-spec/updates.json')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
+          .mock({ url: '/api/plugins/installed', file: 'update-center-spec/installed.json' })
+          .mock({ url: '/api/plugins/updates', file: 'update-center-spec/updates.json' })
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementExist('.js-plugin-name')
           .checkElementCount('li[data-id]', 4)
@@ -79,9 +75,8 @@ define(function (require) {
     bdd.it('should show available', function () {
       return this.remote
           .open('#available')
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/available', 'update-center-spec/available.json')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
+          .mock({ url: '/api/plugins/available', file: 'update-center-spec/available.json' })
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementExist('.js-plugin-name')
           .checkElementCount('li[data-id]', 3)
@@ -92,12 +87,11 @@ define(function (require) {
     bdd.it('should switch between views', function () {
       return this.remote
           .open('#installed')
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/installed', 'update-center-spec/installed.json')
-          .mockFromFile('/api/plugins/updates', 'update-center-spec/updates.json')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
-          .mockFromFile('/api/plugins/available', 'update-center-spec/available.json')
-          .mockFromFile('/api/system/upgrades', 'update-center-spec/system-updates.json')
+          .mock({ url: '/api/plugins/installed', file: 'update-center-spec/installed.json' })
+          .mock({ url: '/api/plugins/updates', file: 'update-center-spec/updates.json' })
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
+          .mock({ url: '/api/plugins/available', file: 'update-center-spec/available.json' })
+          .mock({ url: '/api/system/upgrades', file: 'update-center-spec/system-updates.json' })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementExist('.js-plugin-name')
           .checkElementCount('li[data-id]', 5)
@@ -139,10 +133,9 @@ define(function (require) {
     bdd.it('should search', function () {
       return this.remote
           .open('#installed')
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/installed', 'update-center-spec/installed.json')
-          .mockFromFile('/api/plugins/updates', 'update-center-spec/updates.json')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
+          .mock({ url: '/api/plugins/installed', file: 'update-center-spec/installed.json' })
+          .mock({ url: '/api/plugins/updates', file: 'update-center-spec/updates.json' })
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementExist('.js-plugin-name')
           .checkElementCount('li[data-id]', 5)
@@ -158,9 +151,8 @@ define(function (require) {
     bdd.it('should search by category on click', function () {
       return this.remote
           .open('#available')
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/available', 'update-center-spec/available.json')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
+          .mock({ url: '/api/plugins/available', file: 'update-center-spec/available.json' })
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementCount('li[data-id]:not(.hidden)', 3)
           .clickElement('li[data-id="abap"] .js-plugin-category')
@@ -170,10 +162,9 @@ define(function (require) {
     bdd.it('should show changelog of plugin update', function () {
       return this.remote
           .open('#installed')
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/installed', 'update-center-spec/installed.json')
-          .mockFromFile('/api/plugins/updates', 'update-center-spec/updates.json')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
+          .mock({ url: '/api/plugins/installed', file: 'update-center-spec/installed.json' })
+          .mock({ url: '/api/plugins/updates', file: 'update-center-spec/updates.json' })
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementExist('.js-plugin-name')
           .clickElement('li[data-id="python"] .js-changelog')
@@ -187,9 +178,8 @@ define(function (require) {
     bdd.it('should show changelog of plugin release', function () {
       return this.remote
           .open('#available')
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/available', 'update-center-spec/available.json')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
+          .mock({ url: '/api/plugins/available', file: 'update-center-spec/available.json' })
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementExist('.js-plugin-name')
           .clickElement('li[data-id="abap"] .js-changelog')
@@ -203,11 +193,10 @@ define(function (require) {
     bdd.it('should update plugin', function () {
       return this.remote
           .open('#installed')
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/installed', 'update-center-spec/installed.json')
-          .mockFromFile('/api/plugins/updates', 'update-center-spec/updates.json')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
-          .mockFromString('/api/plugins/update', '{}', { data: { key: 'scmgit' } })
+          .mock({ url: '/api/plugins/installed', file: 'update-center-spec/installed.json' })
+          .mock({ url: '/api/plugins/updates', file: 'update-center-spec/updates.json' })
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
+          .mock({ url: '/api/plugins/update', data: { key: 'scmgit' } })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementExist('.js-plugin-name')
           .clickElement('li[data-id="scmgit"] .js-update')
@@ -218,11 +207,10 @@ define(function (require) {
     bdd.it('should uninstall plugin', function () {
       return this.remote
           .open('#installed')
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/installed', 'update-center-spec/installed.json')
-          .mockFromFile('/api/plugins/updates', 'update-center-spec/updates.json')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
-          .mockFromString('/api/plugins/uninstall', '{}', { data: { key: 'scmgit' } })
+          .mock({ url: '/api/plugins/installed', file: 'update-center-spec/installed.json' })
+          .mock({ url: '/api/plugins/updates', file: 'update-center-spec/updates.json' })
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
+          .mock({ url: '/api/plugins/uninstall', data: { key: 'scmgit' } })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementExist('.js-plugin-name')
           .clickElement('li[data-id="scmgit"] .js-uninstall')
@@ -233,10 +221,9 @@ define(function (require) {
     bdd.it('should install plugin', function () {
       return this.remote
           .open('#available')
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/available', 'update-center-spec/available.json')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
-          .mockFromString('/api/plugins/install', '{}', { data: { key: 'android' } })
+          .mock({ url: '/api/plugins/available', file: 'update-center-spec/available.json' })
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
+          .mock({ url: '/api/plugins/install', data: { key: 'android' } })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementExist('.js-plugin-name')
           .clickElement('li[data-id="android"] .js-install')
@@ -247,10 +234,9 @@ define(function (require) {
     bdd.it('should cancel all pending', function () {
       return this.remote
           .open('#available')
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/available', 'update-center-spec/available.json')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
-          .mockFromString('/api/plugins/cancel_all', '{}')
+          .mock({ url: '/api/plugins/available', file: 'update-center-spec/available.json' })
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
+          .mock({ url: '/api/plugins/cancel_all' })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementExist('.js-plugin-name')
           .checkElementExist('.js-pending')
@@ -261,10 +247,9 @@ define(function (require) {
     bdd.it('should should check terms and conditions', function () {
       return this.remote
           .open('#available')
-          .mockFromString('/api/l10n/index', '{}')
-          .mockFromFile('/api/plugins/available', 'update-center-spec/available.json')
-          .mockFromFile('/api/plugins/pending', 'update-center-spec/pending.json')
-          .mockFromString('/api/plugins/install', '{}', { data: { key: 'abap' } })
+          .mock({ url: '/api/plugins/available', file: 'update-center-spec/available.json' })
+          .mock({ url: '/api/plugins/pending', file: 'update-center-spec/pending.json' })
+          .mock({ url: '/api/plugins/install', data: { key: 'abap' } })
           .startApp('update-center', { urlRoot: '/test/medium/base.html' })
           .checkElementExist('.js-plugin-name')
           .checkElementExist('li[data-id="abap"] .js-terms')

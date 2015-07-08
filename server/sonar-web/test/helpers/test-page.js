@@ -4,6 +4,7 @@ define(function (require) {
   var fs = require('intern/dojo/node!fs');
   var Command = require('intern/dojo/node!leadfoot/Command');
   var pollUntil = require('intern/dojo/node!leadfoot/helpers/pollUntil');
+  var _ = require('intern/dojo/node!underscore');
 
   var DEFAULT_TIMEOUT = 4000;
 
@@ -118,25 +119,45 @@ define(function (require) {
     });
   };
 
-  Command.prototype.mockFromFile = function (url, file, options) {
-    var response = fs.readFileSync('src/test/json/' + file, 'utf-8');
+  /**
+   * Mock a WS call
+   * @param options
+   * @param options.url URL to mock
+   * @param options.file File that contains response
+   * @param options.responseText Text to respond with
+   * @returns {Command}
+   */
+  Command.prototype.mock = function (options) {
+
+    /**
+     * Try to read a file
+     * @param {string|undefined} file
+     * @returns {string|null}
+     */
+    function fromFile (file) {
+      return file ? fs.readFileSync('src/test/json/' + file, 'utf-8') : null;
+    }
+
+    // first, try to read from file
+    // then try to use provided responseText
+    // finally fallback to "{}"
+    options.responseText = fromFile(options.file) || options.responseText || '{}';
+
+    // do not pass internal file parameter to mockjax
+    delete options.file;
+
     return new this.constructor(this, function () {
       return this.parent
-          .execute(function (url, response, options) {
-            return jQuery.mockjax(_.extend({ url: url, responseText: response }, options));
-          }, [url, response, options]);
+          .execute(function (options) {
+            return jQuery.mockjax(options);
+          }, [options]);
     });
   };
 
-  Command.prototype.mockFromString = function (url, response, options) {
-    return new this.constructor(this, function () {
-      return this.parent
-          .execute(function (url, response, options) {
-            return jQuery.mockjax(_.extend({ url: url, responseText: response }, options));
-          }, [url, response, options]);
-    });
-  };
-
+  /**
+   * Clear all mocks
+   * @returns {Command}
+   */
   Command.prototype.clearMocks = function () {
     return new this.constructor(this, function () {
       return this.parent
@@ -166,7 +187,7 @@ define(function (require) {
     return new this.constructor(this, function () {
       return this.parent
           .get(require.toUrl(url))
-          .mockFromString('/api/l10n/index', '{}')
+          .mock({ url: '/api/l10n/index' })
           .checkElementExist('#content');
     });
   };
