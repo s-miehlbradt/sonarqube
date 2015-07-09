@@ -11,6 +11,6 @@ define({
 
   tunnel: 'NullTunnel',
   environments: [
-    { browserName: 'firefox' }
+    { browserName: 'firefox', version: '39' }
   ]
 });

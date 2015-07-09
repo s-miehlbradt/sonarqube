@@ -31,7 +31,7 @@ define(['intern'], function (intern) {
 
     tunnel: tunnel,
     environments: [
-      { browserName: 'firefox' }
+      { browserName: 'firefox', version: '39' }
     ]
   };
 });
