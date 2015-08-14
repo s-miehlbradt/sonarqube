@@ -4,6 +4,7 @@
 <mapper namespace="org.sonar.db.measure.MeasureMapper">
   <sql id="measureColumns">
     pm.id,
+    pm.metric_id as metricId,
     pm.snapshot_id as snapshotId,
     pm.value as value,
     pm.text_value as textValue,

@@ -21,6 +21,8 @@
 package org.sonar.db.measure;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
 import java.util.List;
@@ -35,6 +37,7 @@ import org.sonar.test.DbTests;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.guava.api.Assertions.assertThat;
 
 @Category(DbTests.class)
 public class MeasureDaoTest {
@@ -110,14 +113,20 @@ public class MeasureDaoTest {
     List<MeasureDto> results = underTest.selectBySnapshotIdAndMetricKeys(5l, ImmutableSet.of("ncloc", "authors_by_line"), db.getSession());
     assertThat(results).hasSize(2);
 
-    results = underTest.selectByComponentKeyAndMetricKeys(db.getSession(), "org.struts:struts-core:src/org/struts/RequestContext.java", newArrayList("ncloc"));
-    assertThat(results).hasSize(1);
+    Optional<MeasureDto> optional = FluentIterable.from(results).filter(new Predicate<MeasureDto>() {
+      @Override
+      public boolean apply(@Nullable MeasureDto input) {
+        return input.getId() == 22;
+      }
+    }).first();
+    assertThat(optional).isPresent();
 
-    MeasureDto result = results.get(0);
+    MeasureDto result = optional.get();
     assertThat(result.getId()).isEqualTo(22);
+    assertThat(result.getMetricId()).isEqualTo(12);
+    assertThat(result.getMetricKey()).isNull();
     assertThat(result.getValue()).isEqualTo(10d);
-    assertThat(result.getComponentKey()).isEqualTo("org.struts:struts-core:src/org/struts/RequestContext.java");
-    assertThat(result.getMetricKey()).isEqualTo("ncloc");
+    assertThat(result.getComponentKey()).isNull();
     assertThat(result.getVariation(1)).isEqualTo(1d);
     assertThat(result.getVariation(2)).isEqualTo(2d);
     assertThat(result.getVariation(3)).isEqualTo(3d);
