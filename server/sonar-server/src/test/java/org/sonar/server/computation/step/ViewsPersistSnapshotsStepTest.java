@@ -196,12 +196,12 @@ public class ViewsPersistSnapshotsStepTest extends BaseStepTest {
 
     underTest.execute();
 
-    SnapshotDto viewSnapshot = getUnprocessedSnapshot(viewSnapshotDto.getId());
+    SnapshotDto viewSnapshot = getUnprocessedSnapshot(viewDto.getId());
     assertThat(viewSnapshot.getPeriodMode(1)).isEqualTo(CoreProperties.TIMEMACHINE_MODE_DATE);
     assertThat(viewSnapshot.getPeriodDate(1)).isEqualTo(analysisDate);
     assertThat(viewSnapshot.getPeriodModeParameter(1)).isNotNull();
 
-    SnapshotDto subViewSnapshot = getUnprocessedSnapshot(subViewSnapshotDto.getId());
+    SnapshotDto subViewSnapshot = getUnprocessedSnapshot(subViewDto.getId());
     assertThat(subViewSnapshot.getPeriodMode(1)).isEqualTo(CoreProperties.TIMEMACHINE_MODE_DATE);
     assertThat(subViewSnapshot.getPeriodDate(1)).isEqualTo(analysisDate);
     assertThat(subViewSnapshot.getPeriodModeParameter(1)).isNotNull();
